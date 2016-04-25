@@ -1,0 +1,12 @@
+{
+  "name": "react-bootstrap-shaking-react-form-field",
+  "version": "0.0.1",
+  "description": "react-bootstrap field class for shaking-react-form.",
+  "main": "index.js",
+  "author": "zhaoyao91",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ShakingMap/shaking-react-form.git"
+  }
+}
