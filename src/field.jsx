@@ -220,7 +220,7 @@ const SelectGroupField = (props)=> {
     </FormGroup>
 };
 
-export default FormField = (props) => {
+const  FormField = (props) => {
     const {type} = props.schema;
     let Field;
 
@@ -245,5 +245,7 @@ FormField.getDefaultValue = (schema)=> {
         return '';
     }
 };
+
+export default FormField;
 
 function defaultValidateFunc() {}
