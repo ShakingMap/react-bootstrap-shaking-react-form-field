@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
@@ -14,352 +14,404 @@ var _reactBootstrap = require('react-bootstrap');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// support text, email, password, file
-var InputField = function InputField(props) {
-    var schema = props.schema;
-    var value = props.value;
-    var _onChange = props.onChange;
-    var onFocus = props.onFocus;
-    var onBlur = props.onBlur;
-    var enableValidation = props.enableValidation;
-    var label = schema.label;
-    var type = schema.type;
-    var _schema$validate = schema.validate;
-    var validate = _schema$validate === undefined ? defaultValidateFunc : _schema$validate;
-    var _schema$options = schema.options;
-    var options = _schema$options === undefined ? {} : _schema$options;
-    var placeholder = options.placeholder;
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-    var error = validate(value);
-    var validationState = !enableValidation ? null : error ? 'error' : 'success';
+/**
+ * props for fields, all are optional
+ * - {String} label
+ * - {String} type
+ * - {Any} options
+ * - {Any} value
+ * - {Func(value)} onChange
+ * - {String} validationState - 'success' or 'error'
+ * - {String} validationError
+ */
 
-    return _react2.default.createElement(
-        _reactBootstrap.FormGroup,
-        {
-            controlId: Math.random() + '',
-            validationState: validationState
-        },
-        label ? _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            null,
-            label
-        ) : null,
-        _react2.default.createElement(_reactBootstrap.FormControl, {
-            type: type,
-            placeholder: placeholder,
-            value: value,
-            onChange: function onChange(e) {
-                return _onChange(e.target.value);
-            },
-            onFocus: onFocus,
-            onBlur: onBlur
-        }),
-        _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null),
-        enableValidation && error ? _react2.default.createElement(
-            _reactBootstrap.HelpBlock,
-            null,
-            error
-        ) : null
-    );
-};
+var fieldClass = 'field';
 
-var TextareaField = function TextareaField(props) {
-    var schema = props.schema;
-    var value = props.value;
-    var _onChange2 = props.onChange;
-    var onFocus = props.onFocus;
-    var onBlur = props.onBlur;
-    var enableValidation = props.enableValidation;
-    var label = schema.label;
-    var _schema$validate2 = schema.validate;
-    var validate = _schema$validate2 === undefined ? defaultValidateFunc() : _schema$validate2;
-    var _schema$options2 = schema.options;
-    var options = _schema$options2 === undefined ? {} : _schema$options2;
-    var placeholder = options.placeholder;
-    var rows = options.rows; // todo support 'auto' for rows
+// support types: text, email, password, file
+// support options: placeholder
 
-    var error = validate(value);
-    var validationState = !enableValidation ? null : error ? 'error' : 'success';
+var InputField = function (_React$Component) {
+    _inherits(InputField, _React$Component);
 
-    return _react2.default.createElement(
-        _reactBootstrap.FormGroup,
-        {
-            controlId: Math.random() + '',
-            validationState: validationState
-        },
-        label ? _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            null,
-            label
-        ) : null,
-        _react2.default.createElement(_reactBootstrap.FormControl, {
-            componentClass: 'textarea',
-            placeholder: placeholder,
-            rows: rows,
-            value: value,
-            onChange: function onChange(e) {
-                return _onChange2(e.target.value);
-            },
-            onFocus: onFocus,
-            onBlur: onBlur,
-            style: { resize: 'vertical' }
-        }),
-        _react2.default.createElement(_reactBootstrap.FormControl.Feedback, null),
-        enableValidation && error ? _react2.default.createElement(
-            _reactBootstrap.HelpBlock,
-            null,
-            error
-        ) : null
-    );
-};
+    function InputField(props) {
+        _classCallCheck(this, InputField);
 
-var CheckBoxGroupField = function CheckBoxGroupField(props) {
-    var schema = props.schema;
-    var value = props.value;
-    var _onChange3 = props.onChange;
-    var onFocus = props.onFocus;
-    var onBlur = props.onBlur;
-    var enableValidation = props.enableValidation;
-    var label = schema.label;
-    var _schema$validate3 = schema.validate;
-    var validate = _schema$validate3 === undefined ? defaultValidateFunc : _schema$validate3;
-    var _schema$options3 = schema.options;
-    var options = _schema$options3 === undefined ? {} : _schema$options3;
-    var group = options.group;
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(InputField).call(this, props));
 
-
-    var error = validate(value);
-    var validationState = !enableValidation ? null : error ? 'error' : 'success';
-
-    return _react2.default.createElement(
-        _reactBootstrap.FormGroup,
-        {
-            controlId: Math.random() + '',
-            validationState: validationState
-        },
-        label ? [_react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            { key: 0 },
-            label
-        ), _react2.default.createElement('br', { key: 1 })] : null,
-        Object.keys(group).map(function (key, index) {
-            return _react2.default.createElement(
-                _reactBootstrap.Checkbox,
-                {
-                    key: index,
-                    inline: true,
-                    style: { marginRight: '10px' },
-                    onFocus: onFocus,
-                    onBlur: onBlur,
-                    checked: value[key],
-                    onChange: function onChange(e) {
-                        return _onChange3(Object.assign({}, value, _defineProperty({}, key, e.target.checked)));
-                    }
-                },
-                group[key]
-            );
-        }),
-        enableValidation && error ? _react2.default.createElement(
-            _reactBootstrap.HelpBlock,
-            null,
-            error
-        ) : null
-    );
-};
-
-var RadioGroupField = function RadioGroupField(props) {
-    var schema = props.schema;
-    var value = props.value;
-    var _onChange4 = props.onChange;
-    var onFocus = props.onFocus;
-    var onBlur = props.onBlur;
-    var enableValidation = props.enableValidation;
-    var label = schema.label;
-    var _schema$validate4 = schema.validate;
-    var validate = _schema$validate4 === undefined ? defaultValidateFunc : _schema$validate4;
-    var _schema$options4 = schema.options;
-    var options = _schema$options4 === undefined ? {} : _schema$options4;
-    var group = options.group;
-
-
-    var error = validate(value);
-    var validationState = !enableValidation ? null : error ? 'error' : 'success';
-
-    return _react2.default.createElement(
-        _reactBootstrap.FormGroup,
-        {
-            controlId: Math.random() + '',
-            validationState: validationState
-        },
-        label ? [_react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            { key: 0 },
-            label
-        ), _react2.default.createElement('br', { key: 1 })] : null,
-        Object.keys(group).map(function (key, index) {
-            return _react2.default.createElement(
-                _reactBootstrap.Radio,
-                {
-                    key: index,
-                    inline: true,
-                    style: { marginRight: '10px' },
-                    onFocus: onFocus,
-                    onBlur: onBlur,
-                    checked: value[key],
-                    onChange: function onChange(e) {
-                        var newValue = {};
-                        for (var k in value) {
-                            if (value.hasOwnProperty(k)) newValue[k] = false;
-                        }
-                        newValue[key] = e.target.checked;
-                        _onChange4(newValue);
-                    }
-                },
-                group[key]
-            );
-        }),
-        enableValidation && error ? _react2.default.createElement(
-            _reactBootstrap.HelpBlock,
-            null,
-            error
-        ) : null
-    );
-};
-
-var SelectGroupField = function SelectGroupField(props) {
-    var schema = props.schema;
-    var value = props.value;
-    var onChange = props.onChange;
-    var onFocus = props.onFocus;
-    var onBlur = props.onBlur;
-    var enableValidation = props.enableValidation;
-    var label = schema.label;
-    var _schema$validate5 = schema.validate;
-    var validate = _schema$validate5 === undefined ? defaultValidateFunc : _schema$validate5;
-    var _schema$options5 = schema.options;
-    var options = _schema$options5 === undefined ? {} : _schema$options5;
-    var group = options.group;
-    var placeholder = options.placeholder;
-    var multiple = options.multiple;
-
-
-    var error = validate(value);
-    var validationState = !enableValidation ? null : error ? 'error' : 'success';
-
-    var selectValue = void 0;
-    if (!multiple) {
-        for (var k in value) {
-            if (value.hasOwnProperty(k) && value[k]) {
-                selectValue = k;
-                break;
-            }
-        }
-    } else {
-        selectValue = [];
-        for (var _k in value) {
-            if (value.hasOwnProperty(_k) && value[_k]) {
-                selectValue.push(_k);
-            }
-        }
+        _this.id = Math.random() + '';
+        return _this;
     }
 
-    var onSelectChange = void 0;
-    if (!multiple) {
-        onSelectChange = function onSelectChange(e) {
-            var newValue = {};
-            for (var _k2 in value) {
-                if (value.hasOwnProperty(_k2)) newValue[_k2] = false;
-            }
-            newValue[e.target.value] = true;
-            onChange(newValue);
-        };
-    } else {
-        onSelectChange = function onSelectChange(e) {
-            var newValue = {};
-            var options = e.target.options;
-            for (var i in options) {
-                if (options.hasOwnProperty(i)) {
-                    newValue[options[i].value] = !!options[i].selected;
-                }
-            }
-            onChange(newValue);
-        };
+    _createClass(InputField, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props;
+            var label = _props.label;
+            var type = _props.type;
+            var options = _props.options;
+            var _onChange = _props.onChange;
+            var value = _props.value;
+            var validationState = _props.validationState;
+            var validationError = _props.validationError;
+
+            var _ref = options || {};
+
+            var placeholder = _ref.placeholder;
+
+
+            var shouldShowError = validationState === 'error' && validationError;
+
+            return _react2.default.createElement(
+                _reactBootstrap.FormGroup,
+                { controlId: this.id, validationState: validationState },
+                label ? _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    label
+                ) : null,
+                _react2.default.createElement(_reactBootstrap.FormControl, {
+                    type: type,
+                    value: value || '',
+                    placeholder: placeholder,
+                    onChange: function onChange(e) {
+                        return _onChange(e.target.value);
+                    }
+                }),
+                shouldShowError ? _react2.default.createElement(
+                    _reactBootstrap.HelpBlock,
+                    null,
+                    validationError
+                ) : null
+            );
+        }
+    }]);
+
+    return InputField;
+}(_react2.default.Component);
+
+// support types: textarea
+// support options: placeholder, rows
+
+
+var TextareaField = function (_React$Component2) {
+    _inherits(TextareaField, _React$Component2);
+
+    function TextareaField(props) {
+        _classCallCheck(this, TextareaField);
+
+        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(TextareaField).call(this, props));
+
+        _this2.id = Math.random() + '';
+        return _this2;
     }
 
-    return _react2.default.createElement(
-        _reactBootstrap.FormGroup,
-        {
-            controlId: Math.random() + '',
-            validationState: validationState
-        },
-        label ? _react2.default.createElement(
-            _reactBootstrap.ControlLabel,
-            { key: 0 },
-            label
-        ) : null,
-        _react2.default.createElement(
-            _reactBootstrap.FormControl,
-            {
-                componentClass: 'select',
-                placeholder: placeholder,
-                multiple: multiple,
-                onFocus: onFocus,
-                onBlur: onBlur,
-                value: selectValue,
-                onChange: onSelectChange
-            },
-            Object.keys(group).map(function (key, index) {
-                return _react2.default.createElement(
-                    'option',
-                    {
-                        key: index,
-                        value: key
+    _createClass(TextareaField, [{
+        key: 'render',
+        value: function render() {
+            var _props2 = this.props;
+            var label = _props2.label;
+            var options = _props2.options;
+            var _onChange2 = _props2.onChange;
+            var value = _props2.value;
+            var validationState = _props2.validationState;
+            var validationError = _props2.validationError;
+
+            var _ref2 = options || {};
+
+            var placeholder = _ref2.placeholder;
+            var rows = _ref2.rows;
+
+
+            var shouldShowError = validationState === 'error' && validationError;
+
+            return _react2.default.createElement(
+                _reactBootstrap.FormGroup,
+                { controlId: this.id, validationState: validationState },
+                label ? _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    label
+                ) : null,
+                _react2.default.createElement(_reactBootstrap.FormControl, {
+                    componentClass: 'textarea',
+                    value: value || '',
+                    placeholder: placeholder,
+                    rows: rows // todo support 'auto'
+                    , onChange: function onChange(e) {
+                        return _onChange2(e.target.value);
                     },
-                    group[key]
-                );
-            })
-        ),
-        enableValidation && error ? _react2.default.createElement(
-            _reactBootstrap.HelpBlock,
-            null,
-            error
-        ) : null
-    );
-};
+                    style: { resize: 'vertical' }
+                }),
+                shouldShowError ? _react2.default.createElement(
+                    _reactBootstrap.HelpBlock,
+                    null,
+                    validationError
+                ) : null
+            );
+        }
+    }]);
+
+    return TextareaField;
+}(_react2.default.Component);
+
+// support types: group.checkbox
+// support options: group, vertical
+// options.group is an object, where key is checkbox key, and value is checkbox label
+// value is an array, where items are the keys of checked checkboxes
+
+
+var CheckboxGroupField = function (_React$Component3) {
+    _inherits(CheckboxGroupField, _React$Component3);
+
+    function CheckboxGroupField(props) {
+        _classCallCheck(this, CheckboxGroupField);
+
+        var _this3 = _possibleConstructorReturn(this, Object.getPrototypeOf(CheckboxGroupField).call(this, props));
+
+        _this3.id = Math.random() + '';
+        return _this3;
+    }
+
+    _createClass(CheckboxGroupField, [{
+        key: 'render',
+        value: function render() {
+            var _props3 = this.props;
+            var label = _props3.label;
+            var options = _props3.options;
+            var _onChange3 = _props3.onChange;
+            var value = _props3.value;
+            var validationState = _props3.validationState;
+            var validationError = _props3.validationError;
+
+            var _ref3 = options || {};
+
+            var group = _ref3.group;
+            var vertical = _ref3.vertical;
+
+
+            var shouldShowError = validationState === 'error' && validationError;
+
+            var checkedItems = new Set(value);
+
+            return _react2.default.createElement(
+                _reactBootstrap.FormGroup,
+                { validationState: validationState },
+                label ? _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    label
+                ) : null,
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    Object.keys(group).map(function (key) {
+                        return _react2.default.createElement(
+                            _reactBootstrap.Checkbox,
+                            {
+                                key: key,
+                                inline: !vertical,
+                                style: vertical ? null : { marginRight: '1rem' },
+                                checked: checkedItems.has(key),
+                                onChange: function onChange(e) {
+                                    var newValue = (value || []).filter(function (x) {
+                                        return x !== key;
+                                    });
+                                    if (e.target.checked) newValue.push(key);
+                                    _onChange3(newValue);
+                                }
+                            },
+                            group[key]
+                        );
+                    })
+                ),
+                shouldShowError ? _react2.default.createElement(
+                    _reactBootstrap.HelpBlock,
+                    null,
+                    validationError
+                ) : null
+            );
+        }
+    }]);
+
+    return CheckboxGroupField;
+}(_react2.default.Component);
+
+// support types: group.radio
+// support options: group, vertical
+// options.group is an object, where key is radio key, and value is radio label
+// value is the key of selected radio
+
+
+var RadioGroupField = function (_React$Component4) {
+    _inherits(RadioGroupField, _React$Component4);
+
+    function RadioGroupField(props) {
+        _classCallCheck(this, RadioGroupField);
+
+        var _this4 = _possibleConstructorReturn(this, Object.getPrototypeOf(RadioGroupField).call(this, props));
+
+        _this4.id = Math.random() + '';
+        return _this4;
+    }
+
+    _createClass(RadioGroupField, [{
+        key: 'render',
+        value: function render() {
+            var _props4 = this.props;
+            var label = _props4.label;
+            var options = _props4.options;
+            var _onChange4 = _props4.onChange;
+            var value = _props4.value;
+            var validationState = _props4.validationState;
+            var validationError = _props4.validationError;
+
+            var _ref4 = options || {};
+
+            var group = _ref4.group;
+            var vertical = _ref4.vertical;
+
+
+            var shouldShowError = validationState === 'error' && validationError;
+
+            return _react2.default.createElement(
+                _reactBootstrap.FormGroup,
+                { validationState: validationState },
+                label ? _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    null,
+                    label
+                ) : null,
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    Object.keys(group).map(function (key) {
+                        return _react2.default.createElement(
+                            _reactBootstrap.Radio,
+                            {
+                                key: key,
+                                inline: !vertical,
+                                style: vertical ? null : { marginRight: '1rem' },
+                                checked: key === value,
+                                onChange: function onChange(e) {
+                                    return _onChange4(key);
+                                }
+                            },
+                            group[key]
+                        );
+                    })
+                ),
+                shouldShowError ? _react2.default.createElement(
+                    _reactBootstrap.HelpBlock,
+                    null,
+                    validationError
+                ) : null
+            );
+        }
+    }]);
+
+    return RadioGroupField;
+}(_react2.default.Component);
+
+// support types: group.select
+// support options: group, multiple
+// options.group is an object, where key is option key, and value is option text
+// if not multiple, value is the key of selected option
+// else value is an array of keys of selected options
+
+
+var SelectGroupField = function (_React$Component5) {
+    _inherits(SelectGroupField, _React$Component5);
+
+    function SelectGroupField(props) {
+        _classCallCheck(this, SelectGroupField);
+
+        var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(SelectGroupField).call(this, props));
+
+        _this5.id = Math.random() + '';
+        return _this5;
+    }
+
+    _createClass(SelectGroupField, [{
+        key: 'render',
+        value: function render() {
+            var _props5 = this.props;
+            var label = _props5.label;
+            var options = _props5.options;
+            var onChange = _props5.onChange;
+            var value = _props5.value;
+            var validationState = _props5.validationState;
+            var validationError = _props5.validationError;
+
+            var _ref5 = options || {};
+
+            var group = _ref5.group;
+            var multiple = _ref5.multiple;
+
+
+            var shouldShowError = validationState === 'error' && validationError;
+
+            var onFieldChange = multiple ? function (e) {
+                var options = e.target.options;
+                var value = [];
+                for (var i in options) {
+                    if (options.hasOwnProperty(i) && options[i].selected) value.push(options[i].value);
+                }
+                onChange(value);
+            } : function (e) {
+                return onChange(e.target.value);
+            };
+
+            return _react2.default.createElement(
+                _reactBootstrap.FormGroup,
+                { controlId: this.id, validationState: validationState },
+                label ? _react2.default.createElement(
+                    _reactBootstrap.ControlLabel,
+                    { htmlFor: this.id },
+                    label
+                ) : null,
+                _react2.default.createElement(
+                    _reactBootstrap.FormControl,
+                    {
+                        componentClass: 'select',
+                        value: value || (multiple ? [] : ''),
+                        onChange: onFieldChange,
+                        multiple: multiple
+                    },
+                    Object.keys(group).map(function (key) {
+                        return _react2.default.createElement(
+                            'option',
+                            { key: key, value: key },
+                            group[key]
+                        );
+                    })
+                ),
+                shouldShowError ? _react2.default.createElement(
+                    _reactBootstrap.HelpBlock,
+                    null,
+                    validationError
+                ) : null
+            );
+        }
+    }]);
+
+    return SelectGroupField;
+}(_react2.default.Component);
 
 var FormField = function FormField(props) {
-    var type = props.schema.type;
+    var type = props.type;
 
     var Field = void 0;
 
-    if (type === 'textarea') Field = TextareaField;else if (type === 'group.checkbox') Field = CheckBoxGroupField;else if (type === 'group.radio') Field = RadioGroupField;else if (type === 'group.select') Field = SelectGroupField;else Field = InputField;
+    if (type === 'textarea') Field = TextareaField;else if (type === 'group.checkbox') Field = CheckboxGroupField;else if (type === 'group.radio') Field = RadioGroupField;else if (type === 'group.select') Field = SelectGroupField;else Field = InputField;
 
     return _react2.default.createElement(Field, props);
 };
 
-FormField.getDefaultValue = function (schema) {
-    if (/^group/.test(schema.type)) {
-        var _ret = function () {
-            var value = Object.assign({}, schema.options.group);
-            Object.keys(value).forEach(function (key) {
-                value[key] = false;
-            });
-            return {
-                v: value
-            };
-        }();
-
-        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-    } else {
-        return '';
-    }
-};
-
 exports.default = FormField;
-
-
-function defaultValidateFunc() {}
 
