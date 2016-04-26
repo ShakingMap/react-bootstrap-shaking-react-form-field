@@ -11,7 +11,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ShakingMap/shaking-react-form.git"
+    "url": "git+https://github.com/ShakingMap/react-bootstrap-shaking-react-form-field.git"
   },
   "devDependencies": {
     "babel-cli": "^6.7.7",
