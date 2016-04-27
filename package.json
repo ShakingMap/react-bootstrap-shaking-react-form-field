@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-shaking-react-form-field",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "react-bootstrap field class for shaking-react-form.",
   "main": "dist/field.js",
   "scripts": {
