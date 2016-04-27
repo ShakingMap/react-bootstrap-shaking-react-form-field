@@ -1,6 +1,8 @@
 # React-Bootstrap Shaking React Form Field
 react-bootstrap field class for [shaking-react-form](https://github.com/ShakingMap/shaking-react-form).
 
+tested with react-bootstrap v0.29.2
+
 ## Installation
 - install [react-bootstrap](https://github.com/react-bootstrap/react-bootstrap)
 - `npm install react-bootstrap-shaking-react-form-field  --save`
