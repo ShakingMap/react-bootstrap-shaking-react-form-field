@@ -29,6 +29,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * - {Func(value)} onChange
  * - {String} validationState - 'success' or 'error'
  * - {String} validationError
+ * - {Boolean} readOnly
+ * - {Boolean} disabled
  */
 
 var fieldClass = 'field';
@@ -59,6 +61,8 @@ var InputField = function (_React$Component) {
             var value = _props.value;
             var validationState = _props.validationState;
             var validationError = _props.validationError;
+            var readOnly = _props.readOnly;
+            var disabled = _props.disabled;
 
             var _ref = options || {};
 
@@ -81,7 +85,9 @@ var InputField = function (_React$Component) {
                     placeholder: placeholder,
                     onChange: function onChange(e) {
                         return _onChange(e.target.value);
-                    }
+                    },
+                    readOnly: readOnly,
+                    disabled: disabled
                 }),
                 shouldShowError ? _react2.default.createElement(
                     _reactBootstrap.HelpBlock,
@@ -121,6 +127,8 @@ var TextareaField = function (_React$Component2) {
             var value = _props2.value;
             var validationState = _props2.validationState;
             var validationError = _props2.validationError;
+            var readOnly = _props2.readOnly;
+            var disabled = _props2.disabled;
 
             var _ref2 = options || {};
 
@@ -146,7 +154,9 @@ var TextareaField = function (_React$Component2) {
                     , onChange: function onChange(e) {
                         return _onChange2(e.target.value);
                     },
-                    style: { resize: 'vertical' }
+                    style: { resize: 'vertical' },
+                    readOnly: readOnly,
+                    disabled: disabled
                 }),
                 shouldShowError ? _react2.default.createElement(
                     _reactBootstrap.HelpBlock,
@@ -188,6 +198,8 @@ var CheckboxGroupField = function (_React$Component3) {
             var value = _props3.value;
             var validationState = _props3.validationState;
             var validationError = _props3.validationError;
+            var readOnly = _props3.readOnly;
+            var disabled = _props3.disabled;
 
             var _ref3 = options || {};
 
@@ -224,7 +236,9 @@ var CheckboxGroupField = function (_React$Component3) {
                                     });
                                     if (e.target.checked) newValue.push(key);
                                     _onChange3(newValue);
-                                }
+                                },
+                                readOnly: readOnly,
+                                disabled: disabled
                             },
                             group[key]
                         );
@@ -270,6 +284,8 @@ var RadioGroupField = function (_React$Component4) {
             var value = _props4.value;
             var validationState = _props4.validationState;
             var validationError = _props4.validationError;
+            var readOnly = _props4.readOnly;
+            var disabled = _props4.disabled;
 
             var _ref4 = options || {};
 
@@ -300,7 +316,9 @@ var RadioGroupField = function (_React$Component4) {
                                 checked: key === value,
                                 onChange: function onChange(e) {
                                     return _onChange4(key);
-                                }
+                                },
+                                readOnly: readOnly,
+                                disabled: disabled
                             },
                             group[key]
                         );
@@ -347,6 +365,8 @@ var SelectGroupField = function (_React$Component5) {
             var value = _props5.value;
             var validationState = _props5.validationState;
             var validationError = _props5.validationError;
+            var readOnly = _props5.readOnly;
+            var disabled = _props5.disabled;
 
             var _ref5 = options || {};
 
@@ -381,7 +401,9 @@ var SelectGroupField = function (_React$Component5) {
                         componentClass: 'select',
                         value: value || (multiple ? [] : ''),
                         onChange: onFieldChange,
-                        multiple: multiple
+                        multiple: multiple,
+                        readOnly: readOnly,
+                        disabled: disabled
                     },
                     Object.keys(group).map(function (key) {
                         return _react2.default.createElement(

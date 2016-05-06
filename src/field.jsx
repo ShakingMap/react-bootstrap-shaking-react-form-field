@@ -10,6 +10,8 @@ import {FormGroup, FormControl, ControlLabel, HelpBlock, Checkbox, Radio} from '
  * - {Func(value)} onChange
  * - {String} validationState - 'success' or 'error'
  * - {String} validationError
+ * - {Boolean} readOnly
+ * - {Boolean} disabled
  */
 
 const fieldClass = 'field';
@@ -23,7 +25,7 @@ class InputField extends React.Component {
     }
 
     render() {
-        const {label, type, options, onChange, value, validationState, validationError} = this.props;
+        const {label, type, options, onChange, value, validationState, validationError, readOnly, disabled} = this.props;
         const {placeholder} = options || {};
 
         const shouldShowError = validationState === 'error' && validationError;
@@ -37,6 +39,8 @@ class InputField extends React.Component {
                 value={value || ''}
                 placeholder={placeholder}
                 onChange={e=>onChange(e.target.value)}
+                readOnly={readOnly}
+                disabled={disabled}
             />
             {
                 shouldShowError ? <HelpBlock>{validationError}</HelpBlock> : null
@@ -54,7 +58,7 @@ class TextareaField extends React.Component {
     }
 
     render() {
-        const {label, options, onChange, value, validationState, validationError} = this.props;
+        const {label, options, onChange, value, validationState, validationError, readOnly, disabled} = this.props;
         const {placeholder, rows} = options || {};
 
         const shouldShowError = validationState === 'error' && validationError;
@@ -70,6 +74,8 @@ class TextareaField extends React.Component {
                 rows={rows} // todo support 'auto'
                 onChange={e=>onChange(e.target.value)}
                 style={{resize: 'vertical'}}
+                readOnly={readOnly}
+                disabled={disabled}
             />
             {
                 shouldShowError ? <HelpBlock>{validationError}</HelpBlock> : null
@@ -89,7 +95,7 @@ class CheckboxGroupField extends React.Component {
     }
 
     render() {
-        const {label, options, onChange, value, validationState, validationError} = this.props;
+        const {label, options, onChange, value, validationState, validationError, readOnly, disabled} = this.props;
         const {group, vertical} = options || {};
 
         const shouldShowError = validationState === 'error' && validationError;
@@ -113,6 +119,8 @@ class CheckboxGroupField extends React.Component {
                                 if (e.target.checked) newValue.push(key);
                                 onChange(newValue);
                             }}
+                            readOnly={readOnly}
+                            disabled={disabled}
                         >
                             {group[key]}
                         </Checkbox>
@@ -137,7 +145,7 @@ class RadioGroupField extends React.Component {
     }
 
     render() {
-        const {label, options, onChange, value, validationState, validationError} = this.props;
+        const {label, options, onChange, value, validationState, validationError, readOnly, disabled} = this.props;
         const {group, vertical} = options || {};
 
         const shouldShowError = validationState === 'error' && validationError;
@@ -155,6 +163,8 @@ class RadioGroupField extends React.Component {
                             style={vertical ? null : {marginRight:'1rem'}}
                             checked={key === value}
                             onChange={e=>onChange(key)}
+                            readOnly={readOnly}
+                            disabled={disabled}
                         >
                             {group[key]}
                         </Radio>
@@ -180,7 +190,7 @@ class SelectGroupField extends React.Component {
     }
 
     render() {
-        const {label, options, onChange, value, validationState, validationError} = this.props;
+        const {label, options, onChange, value, validationState, validationError, readOnly, disabled} = this.props;
         const {group, multiple} = options || {};
 
         const shouldShowError = validationState === 'error' && validationError;
@@ -206,6 +216,8 @@ class SelectGroupField extends React.Component {
                 value={value || (multiple ? [] : '')}
                 onChange={onFieldChange}
                 multiple={multiple}
+                readOnly={readOnly}
+                disabled={disabled}
             >
                 {
                     Object.keys(group).map(key=>
